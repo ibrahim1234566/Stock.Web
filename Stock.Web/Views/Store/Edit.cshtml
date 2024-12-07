@@ -1,0 +1,14 @@
+﻿@using Stock.Data.Models
+@model Store
+
+<h2>Update Store</h2>
+
+<form asp-action="Edit" asp-controller="Store" method="post">
+    <input type="hidden" asp-for="StoreId" />
+    <div class="form-group">
+        <label asp-for="Name" class="form-label">Store Name</label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

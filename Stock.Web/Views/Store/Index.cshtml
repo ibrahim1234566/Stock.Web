@@ -1,0 +1,36 @@
+﻿@using Stock.Data.Models
+@{
+    ViewBag.Title = "Store Page";
+}
+<a asp-controller="Main" asp-action="Index" class="btn btn-secondary mb-3">Back to Main</a>
+<h2>Stores</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="StoreName">Add New Store</label>
+        <input type="text" name="Name" class="form-control" placeholder="Enter Store Name" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Add Store</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var store in Model)
+        {
+            <tr>
+                <td>@store.StoreId</td>
+                <td>@store.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@store.StoreId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@store.StoreId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

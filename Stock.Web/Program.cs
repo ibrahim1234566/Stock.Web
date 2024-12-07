@@ -1,3 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using Stock.Data.Context;
+using Stock.Repository.Interfaces;
+using Stock.Repository.Repositories;
+using Stock.Service.Interfaces;
+using Stock.Service.Services;
+
 namespace Stock.Web
 {
     public class Program
@@ -8,6 +15,16 @@ namespace Stock.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<StockDbContext>(op =>
+op.UseSqlServer(builder.Configuration.GetConnectionString("myconn")));
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped<IStoreService, StoreService>();
+            builder.Services.AddScoped<IItemService, ItemService>();
+            builder.Services.AddScoped<IStoreItemService, StoreItemService>();
 
             var app = builder.Build();
 
@@ -28,7 +45,7 @@ namespace Stock.Web
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Main}/{action=Index}/{id?}");
 
             app.Run();
         }
